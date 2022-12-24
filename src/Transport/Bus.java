@@ -1,6 +1,10 @@
 package Transport;
 
-public class Bus extends Transport {
+import Driver.CategoryD;
+
+public class Bus<D extends CategoryD> extends Transport {
+
+    private D driver;
 
     public Bus (String brand, String model) {
         super(brand, model, 3.0);
@@ -8,6 +12,11 @@ public class Bus extends Transport {
 
     public Bus(String brand, String model, double engineCapacity) {
         super(brand, model, engineCapacity);
+    }
+
+    public void compliance(D driver) {
+        System.out.println("\nThe driver " + driver.getName() + " drives " + getBrand() + " " + getModel()
+                    + " and will participate in the race.");
     }
 
     public void startMoving () {
