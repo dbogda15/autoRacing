@@ -1,5 +1,4 @@
 package Transport;
-
 import java.util.Objects;
 
 public abstract class Transport implements Competing {
@@ -66,9 +65,16 @@ public abstract class Transport implements Competing {
     }
 
 
+    public void compliance() {
+
+    };
+
     public abstract void startMoving ();
 
     public abstract void finishMoving ();
+
+    public abstract void printType();
+
 
     @Override
     public void pitStop() {
