@@ -40,17 +40,11 @@ public abstract class Driver {
         }
     }
 
-    public void startMoving () {
+    public abstract void startMoving ();
 
-    };
+    public abstract void finishMoving ();
 
-    public void finishMoving () {
-
-    };
-
-    public void refuelCar () {
-
-    };
+    public abstract void refuelCar ();
 
     public String getName() {
         return name;
