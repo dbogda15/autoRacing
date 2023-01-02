@@ -1,5 +1,9 @@
 package Driver;
 
+import Transport.DriversException;
+
+import java.util.Objects;
+
 public class CategoryB extends Driver {
 
     public CategoryB (String name) {
@@ -15,6 +19,7 @@ public class CategoryB extends Driver {
         this.drivingExperience = drivingExperience;
     }
 
+    @Override
     public void startMoving() {
 
     }
@@ -27,5 +32,14 @@ public class CategoryB extends Driver {
     @Override
     public void finishMoving() {
 
+    }
+
+    @Override
+    public  void checkDrivers() throws DriversException {
+            if (Objects.isNull(getDriverLicense()) || getDriverLicense().isBlank()) {
+                throw new DriversException("\nThere is not data about driver's license of " + getName(), this);
+            } else {
+                System.out.println("\nThere is no problem with " + this.getName() + "'s driver's license info");
+            }
     }
 }

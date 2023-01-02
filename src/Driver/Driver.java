@@ -1,16 +1,19 @@
 package Driver;
 
+
+import Transport.DriversException;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract class Driver {
-    public String name;
-    public String driverLicense;
+    private final String name;
+    private String driverLicense;
     public int drivingExperience;
-    public int yearDriverLicense;
+    private int yearDriverLicense;
 
     public Driver(String name) {
-        this(name, "*please, enter the info about driver license*", 3);
+        this(name, null, 3);
     }
 
     public Driver(String name, String driverLicense, int drivingExperience) {
@@ -21,10 +24,10 @@ public abstract class Driver {
             this.name = name;
         }
 
-        if (Objects.isNull(driverLicense) || driverLicense.isBlank()) {
-            this.driverLicense = "*please, enter the info about driver license*";
-        } else {
-            this.driverLicense = driverLicense;
+        try {
+            setDriverLicense(driverLicense);
+        } catch (DriversException e) {
+            throw new RuntimeException(e);
         }
 
         if (drivingExperience < 0) {
@@ -40,11 +43,11 @@ public abstract class Driver {
         }
     }
 
-    public abstract void startMoving ();
+    public abstract void startMoving();
 
-    public abstract void finishMoving ();
+    public abstract void finishMoving();
 
-    public abstract void refuelCar ();
+    public abstract void refuelCar();
 
     public String getName() {
         return name;
@@ -62,8 +65,21 @@ public abstract class Driver {
         return yearDriverLicense;
     }
 
-    public void setDriverLicense(String driverLicense) {
+    public void setDriverLicense(String driverLicense) throws DriversException {
         this.driverLicense = driverLicense;
+    }
+
+    public abstract void checkDrivers () throws DriversException;
+
+    public static void checkDriversLicence (Driver...drivers) {
+        for (Driver driver : drivers) {
+            try {
+                driver.checkDrivers();
+            } catch (DriversException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter the information about " + driver.getName() + "'s driver's license!");
+            }
+        }
     }
 
     public void setDrivingExperience(int drivingExperience) {
@@ -76,8 +92,8 @@ public abstract class Driver {
 
     @Override
     public String toString() {
-        return "\nDriver: " + getName() + ". Driver license: " + getDriverLicense() +
-                ". The year of issue of the driver's license: " + getYearDriverLicense()  +
+        return "\nDriver: " + getName() + ". Driver license: " + driverLicense +
+                ". The year of issue of the driver's license: " + getYearDriverLicense() +
                 ", driving experience = " + getDrivingExperience() + " years.";
     }
 
@@ -94,3 +110,4 @@ public abstract class Driver {
         return Objects.hash(name, driverLicense, drivingExperience, yearDriverLicense);
     }
 }
+

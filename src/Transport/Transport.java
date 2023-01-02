@@ -1,4 +1,6 @@
 package Transport;
+import Driver.Driver;
+
 import java.util.Objects;
 
 public abstract class Transport implements Competing {
@@ -66,8 +68,7 @@ public abstract class Transport implements Competing {
 
 
     public void compliance() {
-
-    };
+    }
 
     public abstract void startMoving ();
 
@@ -75,6 +76,18 @@ public abstract class Transport implements Competing {
 
     public abstract void printType();
 
+    public abstract void passDiagnostic ();
+
+    public static void diagnostic (Transport...transports) {
+        for (Transport transport : transports) {
+            try {
+                transport.passDiagnostic();
+            } catch (UnsupportedOperationException e) {
+                System.out.println("\nThere is some problem with " + transport.getBrand() + " " + transport.getModel());
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
     @Override
     public void pitStop() {

@@ -67,6 +67,11 @@ public class Bus<D extends CategoryD> extends Transport {
         }
     }
 
+    @Override
+    public void passDiagnostic() {
+        throw new UnsupportedOperationException (getBrand() + " " + getModel() + " can't be diagnosed.");
+    }
+
     public void pitStop() {
         System.out.println("\nReplace " + getBrand() + " " + getModel() + " tires.");
         System.out.println("Refuel.");

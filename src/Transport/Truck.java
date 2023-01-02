@@ -70,4 +70,9 @@ public enum LoadCapacity {
             System.out.println("\nLoad capacity of " + getBrand() + " " + getModel() + from + to);
         }
     }
+
+    @Override
+    public void passDiagnostic() {
+        System.out.println("\n" + getBrand() + " " + getModel() + " can be diagnosed.");
+    }
 }

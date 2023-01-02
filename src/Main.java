@@ -1,14 +1,18 @@
-import Transport.Car;
-import Transport.Bus;
-import Transport.Truck;
 import Driver.CategoryB;
 import Driver.CategoryC;
 import Driver.CategoryD;
+import Transport.Bus;
+import Transport.Car;
+import Transport.DriversException;
+import Transport.Truck;
+
+import static Driver.Driver.checkDriversLicence;
+import static Transport.Transport.diagnostic;
 
 public class Main {
-    public static void main(String[] args) throws IllegalAccessException {
+    public static void main(String[] args) throws IllegalAccessException, DriversException {
 
-        Car<CategoryB> car1 = new Car<> ("Lada", "Granta",1, null);
+        Car<CategoryB> car1 = new Car<>("Lada", "Granta", 1, null);
         Car<CategoryB> car2 = new Car<>("Audi", "A7", 15, Car.BodyType.SEDAN);
         Car<CategoryB> car3 = new Car<>("Toyota", "Camry", -2, Car.BodyType.SEDAN);
         Car<CategoryB> car4 = new Car<>("Mazda", "6", 3.1, Car.BodyType.SEDAN);
@@ -23,50 +27,11 @@ public class Main {
         Truck<CategoryC> truck3 = new Truck<>("URAL", "4320", 55, Truck.LoadCapacity.N2);
         Truck<CategoryC> truck4 = new Truck<>("MAN", "", 77, Truck.LoadCapacity.N1);
 
-//        System.out.println(car3);
-//        System.out.println(truck4);
+        CategoryB dima = new CategoryB("Dima", "yes", 5);
+        CategoryC diana = new CategoryC("Diana", "yes", 6);
+        CategoryD dasha = new CategoryD("Dasha");
 
-        car3.printType();
-        car1.printType();
-        bus1.printType();
-        bus3.printType();
-        truck3.printType();
-        truck1.printType();
-        truck2.printType();
-        truck4.printType();
-
-
-//        double [] lapTimeCar2 = {13, 13.1, 14, 13.5, 13.4};
-//        car2.setLapTimes(lapTimeCar2);
-//        car2.bestLapTime();
-//
-//        double [] lapSpeedCar3 = {190, 189.5, 200, 201.7, 200.9};
-//        car3.setLapSpeed(lapSpeedCar3);
-//        car3.maxSpeed();
-//
-//        double [] lapSpeedTruck3 = {150, 145, 144.9, 154.4, 153.9};
-//        truck3.setLapSpeed(lapSpeedTruck3);
-//        truck3.maxSpeed();
-//
-//        truck2.startMoving();
-//        truck2.finishMoving();
-//
-//        bus4.pitStop();
-//
-//        CategoryB dima = new CategoryB("Dima", "yes", 5);
-//        System.out.println(dima);
-//
-//        CategoryC maxim = new CategoryC("Maxim");
-//        System.out.println(maxim);
-//
-//        CategoryD olga = new CategoryD("Olga", "yes", 15);
-//
-//        car4.compliance(dima);
-//        bus2.compliance(olga);
-//        truck1.compliance(maxim);
-//
-//        CategoryC diana = new CategoryC("Diana", "yes", 4);
-//        System.out.println(diana);
-
+        diagnostic(car1, bus1, truck3);
+        checkDriversLicence(dima,dasha,diana);
     }
 }

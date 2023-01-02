@@ -2,8 +2,6 @@ package Transport;
 
 import Driver.CategoryB;
 
-import java.util.Objects;
-
 public class Car <B extends CategoryB> extends Transport {
 
     public B driver;
@@ -71,5 +69,10 @@ public class Car <B extends CategoryB> extends Transport {
         } else {
             System.out.println("\nBody type of " + getBrand() + " " + getModel() + ": " + bodyType);
         }
+    }
+
+    @Override
+    public void passDiagnostic() {
+        System.out.println("\n" + getBrand() + " " + getModel() + " can be diagnosed.");
     }
 }
