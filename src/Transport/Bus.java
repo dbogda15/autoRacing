@@ -1,7 +1,10 @@
 package Transport;
 
 import Driver.CategoryD;
+import Driver.Driver;
+import Mechanic.Mechanic;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Bus<D extends CategoryD> extends Transport {
@@ -41,6 +44,14 @@ public class Bus<D extends CategoryD> extends Transport {
         this.capacity = capacity;
     }
 
+    public D getDriver() {
+        return driver;
+    }
+
+    public void setDriver(D driver) {
+        this.driver = driver;
+    }
+
     public void compliance(D driver) {
         System.out.println("\nThe driver " + driver.getName() + " drives " + getBrand() + " " + getModel()
                     + " and will participate in the race.");
@@ -70,6 +81,41 @@ public class Bus<D extends CategoryD> extends Transport {
     @Override
     public void passDiagnostic() {
         throw new UnsupportedOperationException (getBrand() + " " + getModel() + " can't be diagnosed.");
+    }
+
+    @Override
+    public void performMaintenance(List<Mechanic> mechanicList) {
+            System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
+            for (Mechanic mechanic : mechanicList) {
+                if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
+                    System.out.println("* " + mechanic);
+                }
+            }
+    }
+
+    @Override
+    public void fixTheVehicle(List<Mechanic> mechanicList) {
+        System.out.println("\nWho can fix " + getBrand () + " " + getModel ());
+        for (Mechanic mechanic : mechanicList) {
+            if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
+                System.out.println("* " + mechanic);
+            }
+        }
+    }
+
+    @Override
+    public void racingTeamInfo(List<Driver> driverList, List<Mechanic> mechanicList) {
+        System.out.println("\nRace team of " + getBrand () + " " + getModel () + ": ");
+            for (Mechanic mechanic : mechanicList) {
+                if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL && mechanicList.size() < 2) {
+                    System.out.println("* Mechanic " + mechanic.getLastName() + " " + mechanic.getName());
+                }
+            }
+        for (Driver driver : driverList) {
+            if (Objects.equals(driver.getName(), getDriver().getName()) && !Objects.isNull(getDriver())) {
+                System.out.println("* Driver " + getDriver().getName());
+            }
+        }
     }
 
     public void pitStop() {

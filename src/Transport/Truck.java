@@ -1,7 +1,10 @@
 package Transport;
 
 import Driver.CategoryC;
+import Driver.Driver;
+import Mechanic.Mechanic;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Truck<C extends CategoryC> extends Transport {
@@ -74,5 +77,51 @@ public enum LoadCapacity {
     @Override
     public void passDiagnostic() {
         System.out.println("\n" + getBrand() + " " + getModel() + " can be diagnosed.");
+    }
+
+    public C getDriver() {
+        return driver;
+    }
+
+    public void setDriver(C driver) {
+        this.driver = driver;
+    }
+
+    @Override
+    public void performMaintenance(List<Mechanic> mechanicList) {
+            System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
+            for (Mechanic mechanic : mechanicList) {
+                if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
+                    System.out.println("* " + mechanic);
+                }
+            }
+        }
+
+    @Override
+    public void fixTheVehicle(List<Mechanic> mechanicList) {
+        System.out.println("\nWho can fix " + getBrand () + " " + getModel ());
+        for (Mechanic mechanic : mechanicList) {
+            if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
+                System.out.println("* " + mechanic);
+            }
+        }
+    }
+
+    @Override
+    public void racingTeamInfo(List<Driver> driverList, List<Mechanic> mechanicList) {
+        System.out.println("\nRace team of " + getBrand () + " " + getModel () + ": ");
+        for (Mechanic mechanic : mechanicList) {
+            if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL&& mechanicList.size() < 2) {
+                System.out.println("* Mechanic " + mechanic.getLastName() + " " + mechanic.getName());
+            }
+        }
+        for (Driver driver : driverList) {
+            if (!Objects.isNull(getDriver().getName()) && Objects.equals(driver.getName(), getDriver().getName()) ) {
+                System.out.println("* Driver " + getDriver().getName());
+            }
+            else if (Objects.isNull(getDriver().getName())) {
+                System.out.println("no driver");
+            }
+        }
     }
 }
