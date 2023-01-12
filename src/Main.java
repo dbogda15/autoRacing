@@ -1,42 +1,87 @@
-import Transport.Transport;
-import Transport.Car;
-import Transport.Bus;
-import Transport.Truck;
+import Driver.CategoryB;
+import Driver.CategoryC;
+import Driver.CategoryD;
+import Driver.Driver;
+import Mechanic.Mechanic;
+import Transport.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException, DriversException {
 
-        Car car1 = new Car ("Lada", "Granta");
-        Car car2 = new Car("Audi", "A7");
-        Car car3 = new Car("Toyota", "Camry", -2);
-        Car car4 = new Car("Mazda", "6", 3.1);
+        Car<CategoryB> car1 = new Car<CategoryB>("Lada", "Granta", 1, Car.BodyType.SEDAN);
+        Car<CategoryB> car2 = new Car<CategoryB>("Audi", "A7", 15, Car.BodyType.SEDAN);
+        Car<CategoryB> car3 = new Car<CategoryB>("Toyota", "Camry", -2, Car.BodyType.SEDAN);
+        Car<CategoryB> car4 = new Car<CategoryB>("Mazda", "6", 3.1, Car.BodyType.SEDAN);
 
-        Bus bus1 = new Bus("NEFAZ", "A11-22-33");
-        Bus bus2 = new Bus("KAMAZ", "B00-110");
-        Bus bus3 = new Bus("", "09876A");
-        Bus bus4 = new Bus("Mercedes-Benz", "0303");
+        Bus<CategoryD> bus1 = new Bus<CategoryD>("NEFAZ", "A11-22-33", 88, Bus.Capacity.EXTRA_SMALL);
+        Bus<CategoryD> bus2 = new Bus<CategoryD>("KAMAZ", "B00-110", 66, Bus.Capacity.EXTRA_LARGE);
+        Bus<CategoryD> bus3 = new Bus<CategoryD>("", "09876A", 88, Bus.Capacity.LARGE);
+        Bus<CategoryD> bus4 = new Bus<CategoryD>("Mercedes-Benz", "0303", 65, Bus.Capacity.EXTRA_SMALL);
 
-        Truck truck1 = new Truck("KAMAZ", "5511");
-        Truck truck2 = new Truck("UAZ", "452");
-        Truck truck3 = new Truck("URAL", "4320");
-        Truck truck4 = new Truck("MAN", "");
+        Truck<CategoryC> truck1 = new Truck<CategoryC>("KAMAZ", "5511", 45, Truck.LoadCapacity.N3);
+        Truck<CategoryC> truck2 = new Truck<CategoryC>("UAZ", "452", 44, Truck.LoadCapacity.N3);
+        Truck<CategoryC> truck3 = new Truck<CategoryC>("URAL", "4320", 55, Truck.LoadCapacity.N2);
+        Truck<CategoryC> truck4 = new Truck<CategoryC>("MAN", "", 77, Truck.LoadCapacity.N1);
 
-        System.out.println(car3);
-        System.out.println(truck4);
+        CategoryB dima = new CategoryB("Dima", "yes", 5);
+        CategoryC diana = new CategoryC("Diana", "yes", 6);
+        CategoryD dasha = new CategoryD("Dasha", "yes", 6);
+        CategoryB alesha = new CategoryB("Alesha", "yes", 5);
+        CategoryC misha = new CategoryC("Misha");
 
-        double [] lapTimeCar2 = {13, 13.1, 14, 13.5, 13.4};
-        car2.setLapTimes(lapTimeCar2);
+        Mechanic maxim = new Mechanic("Maxim", "Maximov", "horns and hooves", Mechanic.Access.ALL);
+        Mechanic oleg = new Mechanic("Oleg", "Olegov", "Auto", Mechanic.Access.BUS);
+        Mechanic masha = new Mechanic("Masha", "Shishkina", "Power", Mechanic.Access.TRUCK);
+        Mechanic egor = new Mechanic("Egor", "Egorov", "Egorov company", Mechanic.Access.CAR);
+        Mechanic andrey = new Mechanic("Andrey", "Petrov", "The fifth wheel", Mechanic.Access.CAR);
 
-        car2.bestLapTime();
+        List<Transport> transportsList = new ArrayList<>();
+        transportsList.add(car1);
+        transportsList.add(car2);
+        transportsList.add(car3);
+        transportsList.add(car4);
+        transportsList.add(bus1);
+        transportsList.add(bus2);
+        transportsList.add(bus3);
+        transportsList.add(bus4);
+        transportsList.add(truck1);
+        transportsList.add(truck2);
+        transportsList.add(truck3);
+        transportsList.add(truck4);
 
-        double [] lapSpeedCar3 = {190, 189.5, 200, 201.7, 200.9};
-        car3.setLapSpeed(lapSpeedCar3);
+        List<Driver> driverList = new ArrayList<>();
+        driverList.add(dima);
+        driverList.add(diana);
+        driverList.add(dasha);
+        driverList.add(alesha);
+        driverList.add(misha);
 
-        car3.maxSpeed();
+        List<Mechanic> mechanicList = new ArrayList<>();
+        mechanicList.add(maxim);
+        mechanicList.add(oleg);
+        mechanicList.add(masha);
+        mechanicList.add(egor);
+        mechanicList.add(andrey);
 
-        truck2.startMoving();
-        truck2.finishMoving();
+        Car <CategoryB> car5 = new Car<CategoryB>("Audi", "Q7", 188, Car.BodyType.CROSSOVER);
+        car5.performMaintenance(mechanicList);
 
-        bus4.pitStop();
+        truck2.performMaintenance(mechanicList);
+        bus3.fixTheVehicle(mechanicList);
+
+        car5.setDriver(dima);
+        truck1.setDriver(diana);
+        bus2.setDriver(dasha);
+
+        car5.racingTeamInfo(driverList, mechanicList);
+        bus2.racingTeamInfo(driverList,mechanicList);
+        truck1.racingTeamInfo(driverList, mechanicList);
+
+        //truck2.racingTeamInfo(driverList,mechanicList);
+        // эта строка намеренно ломающая код.. не могу сообразить как его добить (чтобы не "сорить", писала только для класса Truck)
     }
 }

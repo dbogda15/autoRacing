@@ -1,5 +1,8 @@
 package Transport;
+import Driver.Driver;
+import Mechanic.Mechanic;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Transport implements Competing {
@@ -11,6 +14,8 @@ public abstract class Transport implements Competing {
     public double [] lapTimes;
 
     public double [] lapSpeed;
+    List<Driver> driverList;
+    List<Mechanic> mechanicList;
 
     public Transport (String brand, String model, double engineCapacity) {
 
@@ -31,6 +36,19 @@ public abstract class Transport implements Competing {
         } else {
             this.engineCapacity = engineCapacity;
         }
+    }
+
+    public Transport (String brand, String model, List<Driver> driverList) {
+        this.brand = brand;
+        this.model = model;
+        this.driverList = driverList;
+    }
+
+    public Transport (String brand, String model, List<Driver> driverList, List<Mechanic> mechanicList) {
+        this.brand = brand;
+        this.model = model;
+        this.driverList = driverList;
+        this.mechanicList = mechanicList;
     }
 
     public String getBrand() {
@@ -66,9 +84,32 @@ public abstract class Transport implements Competing {
     }
 
 
+    public void compliance() {
+    }
+
     public abstract void startMoving ();
 
     public abstract void finishMoving ();
+
+    public abstract void printType();
+
+    public abstract void passDiagnostic ();
+
+    public static void diagnostic (Transport...transports) {
+        for (Transport transport : transports) {
+            try {
+                transport.passDiagnostic();
+            } catch (UnsupportedOperationException e) {
+                System.out.println("\nThere is some problem with " + transport.getBrand() + " " + transport.getModel());
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public abstract void performMaintenance(List<Mechanic> mechanicList);
+
+    public abstract void fixTheVehicle (List<Mechanic> mechanicList);
+    public abstract void racingTeamInfo (List<Driver> driverList, List<Mechanic> mechanicList);
 
     @Override
     public void pitStop() {
