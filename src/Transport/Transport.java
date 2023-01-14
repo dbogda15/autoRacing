@@ -2,6 +2,7 @@ package Transport;
 import Driver.Driver;
 import Mechanic.Mechanic;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,8 +15,9 @@ public abstract class Transport implements Competing {
     public double [] lapTimes;
 
     public double [] lapSpeed;
-    List<Driver> driverList;
-    List<Mechanic> mechanicList;
+
+    public List<Driver> driverList;
+    public List<Mechanic> mechanicList;
 
     public Transport (String brand, String model, double engineCapacity) {
 
@@ -36,12 +38,6 @@ public abstract class Transport implements Competing {
         } else {
             this.engineCapacity = engineCapacity;
         }
-    }
-
-    public Transport (String brand, String model, List<Driver> driverList) {
-        this.brand = brand;
-        this.model = model;
-        this.driverList = driverList;
     }
 
     public Transport (String brand, String model, List<Driver> driverList, List<Mechanic> mechanicList) {
@@ -150,11 +146,14 @@ public abstract class Transport implements Competing {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transport transport = (Transport) o;
-        return Double.compare(transport.engineCapacity, engineCapacity) == 0 && Objects.equals(brand, transport.brand) && Objects.equals(model, transport.model);
+        return Double.compare(transport.engineCapacity, engineCapacity) == 0 && Objects.equals(brand, transport.brand) && Objects.equals(model, transport.model) && Arrays.equals(lapTimes, transport.lapTimes) && Arrays.equals(lapSpeed, transport.lapSpeed) && Objects.equals(driverList, transport.driverList) && Objects.equals(mechanicList, transport.mechanicList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(brand, model, engineCapacity);
+        int result = Objects.hash(brand, model, engineCapacity, driverList, mechanicList);
+        result = 31 * result + Arrays.hashCode(lapTimes);
+        result = 31 * result + Arrays.hashCode(lapSpeed);
+        return result;
     }
 }

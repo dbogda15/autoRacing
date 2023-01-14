@@ -35,7 +35,7 @@ public class Main {
 
         Mechanic maxim = new Mechanic("Maxim", "Maximov", "horns and hooves", Mechanic.Access.ALL);
         Mechanic oleg = new Mechanic("Oleg", "Olegov", "Auto", Mechanic.Access.BUS);
-        Mechanic masha = new Mechanic("Masha", "Shishkina", "Power", Mechanic.Access.TRUCK);
+        Mechanic masha = new Mechanic("Masha", "Shishkina", "Strong and independent", Mechanic.Access.TRUCK);
         Mechanic egor = new Mechanic("Egor", "Egorov", "Egorov company", Mechanic.Access.CAR);
         Mechanic andrey = new Mechanic("Andrey", "Petrov", "The fifth wheel", Mechanic.Access.CAR);
 
@@ -67,21 +67,23 @@ public class Main {
         mechanicList.add(egor);
         mechanicList.add(andrey);
 
-        Car <CategoryB> car5 = new Car<CategoryB>("Audi", "Q7", 188, Car.BodyType.CROSSOVER);
-        car5.performMaintenance(mechanicList);
 
+        car3.performMaintenance(mechanicList);
+        bus1.performMaintenance(mechanicList);
         truck2.performMaintenance(mechanicList);
-        bus3.fixTheVehicle(mechanicList);
 
-        car5.setDriver(dima);
-        truck1.setDriver(diana);
-        bus2.setDriver(dasha);
+         car3.setDriver(dima);
+         car3.setMechanic(andrey);
 
-        car5.racingTeamInfo(driverList, mechanicList);
-        bus2.racingTeamInfo(driverList,mechanicList);
-        truck1.racingTeamInfo(driverList, mechanicList);
+         bus1.setDriver(dasha);
+         bus1.setMechanic(maxim);
 
-        //truck2.racingTeamInfo(driverList,mechanicList);
-        // эта строка намеренно ломающая код.. не могу сообразить как его добить (чтобы не "сорить", писала только для класса Truck)
+         truck2.setDriver(diana);
+         truck2.setMechanic(masha);
+
+         car3.racingTeamInfo(driverList, mechanicList);
+         bus1.racingTeamInfo(driverList, mechanicList);
+         truck2.racingTeamInfo(driverList, mechanicList);
+
     }
 }

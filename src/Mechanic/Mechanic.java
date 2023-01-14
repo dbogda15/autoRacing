@@ -1,20 +1,15 @@
 package Mechanic;
 import Transport.Transport;
-import Transport.Car;
-import Transport.Bus;
-import Transport.Truck;
-
-
-import java.util.Arrays;
 import java.util.Objects;
 
-public class Mechanic  {
+public class Mechanic <T extends Transport> {
 
 
     private final String name;
     private final String lastName;
     private final String company;
     private final Access access;
+    public T transport;
 
     public enum Access {
         CAR ("mechanic can only work with passenger cars"),
@@ -33,6 +28,10 @@ public class Mechanic  {
         }
     }
 
+
+    public Mechanic (String name, String lastName) {
+        this (name, lastName, "mechanic", Access.ALL);
+    }
 
     public Mechanic (String name, String lastName, String company, Access access) {
 
@@ -59,42 +58,6 @@ public class Mechanic  {
             this.access = access;
         }
     }
-
-//    public void performMaintenance(Transport ... transports) {
-//        if (Objects.equals(access, Access.ALL)) {
-//            System.out.println("\n\nMechanic " + getName() + " " + getLastName() + " can perform maintenance ");
-//            System.out.print(Arrays.toString(transports));
-//        }
-//    }
-//
-//    public void performMaintenance(Car...cars) {
-//        if (access == Access.CAR && Objects.equals(Car.class, Transport.class)) {
-//            System.out.println("\nMechanic " + getName() + " " + getLastName() + " can perform maintenance ");
-//            System.out.print(Arrays.toString(cars));
-//        }
-//        else {
-//            System.out.println("\nMechanic " + getName() + " " + getLastName() + " can't perform maintenance, because there is only access to cars.");
-//        }
-//    }
-//
-//    public void performMaintenance(Bus...buses) {
-//        if (Objects.equals(access, Access.BUS) && Objects.equals(Bus.class, Transport.class)) {
-//            System.out.println("\n\nMechanic " + getName() + " " + getLastName() + " can perform maintenance ");
-//            System.out.print(Arrays.toString(buses));
-//        }else {
-//            System.out.println("\n\nMechanic " + getName() + " " + getLastName() + " can't perform maintenance, because there is only access to buses. ");
-//        }
-//    }
-//
-//    public void performMaintenance(Truck... trucks) {
-//        if (Objects.equals(access, Access.TRUCK) && Objects.equals(Truck.class, Transport.class)) {
-//            System.out.println("\nMechanic " + getName() + " " + getLastName() + " can perform maintenance ");
-//            System.out.print(Arrays.toString(trucks));
-//        }else {
-//            System.out.println("\n\nMechanic " + getName() + " " + getLastName() + " can't perform maintenance, because there is only access to trucks ");
-//
-//        }
-//    }
 
     public String getName() {
         return name;

@@ -11,6 +11,9 @@ public class Bus<D extends CategoryD> extends Transport {
 
     private D driver;
     private Capacity capacity;
+    private Mechanic <?> mechanic;
+    public List<Mechanic> mechanicList;
+    public List<Driver> driverList;
     public enum Capacity {
         EXTRA_SMALL(0,10),
         SMALL(10, 25),
@@ -83,6 +86,16 @@ public class Bus<D extends CategoryD> extends Transport {
         throw new UnsupportedOperationException (getBrand() + " " + getModel() + " can't be diagnosed.");
     }
 
+    public Mechanic getMechanic() {
+        return mechanic;
+    }
+
+    public void setMechanic(Mechanic mechanic) {
+        if (mechanic != null) {
+            this.mechanic = mechanic;
+        }
+    }
+
     @Override
     public void performMaintenance(List<Mechanic> mechanicList) {
             System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
@@ -105,15 +118,17 @@ public class Bus<D extends CategoryD> extends Transport {
 
     @Override
     public void racingTeamInfo(List<Driver> driverList, List<Mechanic> mechanicList) {
-        System.out.println("\nRace team of " + getBrand () + " " + getModel () + ": ");
+        System.out.println("\nRace team of Bus " + getBrand() + " " + getModel() + ": ");
+        if (mechanic != null || driver != null) {
             for (Mechanic mechanic : mechanicList) {
-                if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL && mechanicList.size() < 2) {
+                if (Objects.equals(mechanic.getName(), getMechanic().getName())) {
                     System.out.println("* Mechanic " + mechanic.getLastName() + " " + mechanic.getName());
                 }
             }
-        for (Driver driver : driverList) {
-            if (Objects.equals(driver.getName(), getDriver().getName()) && !Objects.isNull(getDriver())) {
-                System.out.println("* Driver " + getDriver().getName());
+            for (Driver driver : driverList) {
+                if (Objects.equals(driver.getName(), getDriver().getName())) {
+                    System.out.println("* Driver " + getDriver().getName());
+                }
             }
         }
     }
