@@ -1,5 +1,8 @@
 package Mechanic;
 import Transport.Transport;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Mechanic <T extends Transport> {
@@ -10,6 +13,7 @@ public class Mechanic <T extends Transport> {
     private final String company;
     private final Access access;
     public T transport;
+
 
     public enum Access {
         CAR ("mechanic can only work with passenger cars"),

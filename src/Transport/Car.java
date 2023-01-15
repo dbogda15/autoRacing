@@ -4,6 +4,7 @@ import Driver.CategoryB;
 import Driver.Driver;
 import Mechanic.Mechanic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,8 +13,6 @@ public class Car <B extends CategoryB> extends Transport {
     public B driver;
     public BodyType bodyType;
     public Mechanic mechanic;
-    public List<Mechanic> mechanicList;
-    public List<Driver> driverList;
 
 
     public enum BodyType {
@@ -43,9 +42,9 @@ public class Car <B extends CategoryB> extends Transport {
         this.bodyType = bodyType;
     }
 
-    public void compliance(B driver) {
-        System.out.println("\nThe driver " + driver.getName() + " drives " + getBrand() + " " + getModel()
-                + " and will participate in the race.");
+    public Car(String brand, String model, double engineCapacity, ArrayList<Driver> driverList, ArrayList<Mechanic> mechanicList, BodyType bodyType) {
+        super(brand, model, engineCapacity, driverList, mechanicList);
+        this.bodyType = bodyType;
     }
 
     public B getDriver() {
@@ -54,6 +53,19 @@ public class Car <B extends CategoryB> extends Transport {
 
     public void setDriver(B driver) {
         this.driver = driver;
+    }
+
+    public Mechanic getMechanic() {
+        return mechanic;
+    }
+
+    public void setMechanic(Mechanic mechanic) {
+        this.mechanic = mechanic;
+    }
+
+    public void compliance(B driver) {
+        System.out.println("\nThe driver " + driver.getName() + " drives " + getBrand() + " " + getModel()
+                + " and will participate in the race.");
     }
 
     public void startMoving() {
@@ -81,30 +93,22 @@ public class Car <B extends CategoryB> extends Transport {
         System.out.println("\n" + getBrand() + " " + getModel() + " can be diagnosed.");
     }
 
-    public Mechanic getMechanic() {
-            return mechanic;
-    }
-
-    public void setMechanic(Mechanic mechanic) {
-            this.mechanic = mechanic;
-    }
-
     @Override
-    public void performMaintenance(List<Mechanic> mechanicList) {
+    public void performMaintenance() {
         System.out.println("\nWho can perform maintenance " + getBrand() + " " + getModel() + " : ");
-            for (Mechanic mechanic : mechanicList) {
+            for (Mechanic mechanic : getMechanicList()) {
                 if (mechanic.getAccess() == Mechanic.Access.CAR || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " + mechanic);
+                    System.out.println("* " + mechanic.getLastName() + " " + mechanic.getName());
                 }
             }
     }
 
     @Override
-    public void fixTheVehicle(List<Mechanic> mechanicList) {
-        System.out.println("\nWho can fix " + getBrand() + " " + getModel());
-        for (Mechanic mechanic : mechanicList) {
+    public void fixTheVehicle() {
+        System.out.println("\nWho can fix " + getBrand() + " " + getModel() + ": ");
+        for (Mechanic mechanic : getMechanicList()) {
             if (mechanic.getAccess() == Mechanic.Access.CAR || mechanic.getAccess() == Mechanic.Access.ALL) {
-                System.out.println("* " + mechanic);
+                System.out.println("* " + getMechanicList());
             }
         }
     }

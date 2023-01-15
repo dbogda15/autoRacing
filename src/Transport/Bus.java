@@ -4,6 +4,7 @@ import Driver.CategoryD;
 import Driver.Driver;
 import Mechanic.Mechanic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,8 +13,6 @@ public class Bus<D extends CategoryD> extends Transport {
     private D driver;
     private Capacity capacity;
     private Mechanic <?> mechanic;
-    public List<Mechanic> mechanicList;
-    public List<Driver> driverList;
     public enum Capacity {
         EXTRA_SMALL(0,10),
         SMALL(10, 25),
@@ -97,21 +96,21 @@ public class Bus<D extends CategoryD> extends Transport {
     }
 
     @Override
-    public void performMaintenance(List<Mechanic> mechanicList) {
+    public void performMaintenance() {
             System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
             for (Mechanic mechanic : mechanicList) {
                 if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " + mechanic);
+                    System.out.println("* " + getMechanicList());
                 }
             }
     }
 
     @Override
-    public void fixTheVehicle(List<Mechanic> mechanicList) {
-        System.out.println("\nWho can fix " + getBrand () + " " + getModel ());
-        for (Mechanic mechanic : mechanicList) {
+    public void fixTheVehicle() {
+        System.out.println("\nWho can fix " + getBrand () + " " + getModel ()+ ": ");
+        for (Mechanic mechanic : getMechanicList()) {
             if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
-                System.out.println("* " + mechanic);
+                System.out.println("* " + getMechanic());
             }
         }
     }

@@ -11,8 +11,6 @@ public class Truck<C extends CategoryC> extends Transport {
 
     private C driver;
     private Mechanic <?> mechanic;
-    public List<Mechanic> mechanicList;
-    public List<Driver> driverList;
     private LoadCapacity loadCapacity;
 
 public enum LoadCapacity {
@@ -102,21 +100,21 @@ public enum LoadCapacity {
     }
 
     @Override
-    public void performMaintenance(List<Mechanic> mechanicList) {
+    public void performMaintenance() {
             System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
-            for (Mechanic mechanic : mechanicList) {
+            for (Mechanic mechanic : getMechanicList()) {
                 if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " + mechanic);
+                    System.out.println("* " + getMechanicList());
                 }
             }
         }
 
     @Override
-    public void fixTheVehicle(List<Mechanic> mechanicList) {
-        System.out.println("\nWho can fix " + getBrand () + " " + getModel ());
-        for (Mechanic mechanic : mechanicList) {
+    public void fixTheVehicle() {
+        System.out.println("\nWho can fix " + getBrand () + " " + getModel ()+ ": ");
+        for (Mechanic mechanic : getMechanicList()) {
             if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
-                System.out.println("* " + mechanic);
+                System.out.println("* " + getMechanic());
             }
         }
     }

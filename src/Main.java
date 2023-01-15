@@ -39,6 +39,13 @@ public class Main {
         Mechanic egor = new Mechanic("Egor", "Egorov", "Egorov company", Mechanic.Access.CAR);
         Mechanic andrey = new Mechanic("Andrey", "Petrov", "The fifth wheel", Mechanic.Access.CAR);
 
+        List<Mechanic> mechanicList = new ArrayList<>();
+        mechanicList.add(maxim);
+        mechanicList.add(oleg);
+        mechanicList.add(masha);
+        mechanicList.add(egor);
+        mechanicList.add(andrey);
+
         List<Transport> transportsList = new ArrayList<>();
         transportsList.add(car1);
         transportsList.add(car2);
@@ -60,17 +67,13 @@ public class Main {
         driverList.add(alesha);
         driverList.add(misha);
 
-        List<Mechanic> mechanicList = new ArrayList<>();
-        mechanicList.add(maxim);
-        mechanicList.add(oleg);
-        mechanicList.add(masha);
-        mechanicList.add(egor);
-        mechanicList.add(andrey);
 
 
-        car3.performMaintenance(mechanicList);
-        bus1.performMaintenance(mechanicList);
-        truck2.performMaintenance(mechanicList);
+       car3.performMaintenance();
+//        car3.fixTheVehicle();
+//
+//        bus1.performMaintenance();
+//        truck2.performMaintenance();
 
          car3.setDriver(dima);
          car3.setMechanic(andrey);

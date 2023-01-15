@@ -2,6 +2,7 @@ package Transport;
 import Driver.Driver;
 import Mechanic.Mechanic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -16,11 +17,10 @@ public abstract class Transport implements Competing {
 
     public double [] lapSpeed;
 
-    public List<Driver> driverList;
-    public List<Mechanic> mechanicList;
+    public List<Driver> driverList = new ArrayList<>();
+    public List <Mechanic> mechanicList = new ArrayList<>();
 
     public Transport (String brand, String model, double engineCapacity) {
-
         if (Objects.isNull(brand) || brand.isBlank()) {
             this.brand = "*Undetermined transport*";
         } else {
@@ -40,12 +40,17 @@ public abstract class Transport implements Competing {
         }
     }
 
-    public Transport (String brand, String model, List<Driver> driverList, List<Mechanic> mechanicList) {
-        this.brand = brand;
-        this.model = model;
-        this.driverList = driverList;
-        this.mechanicList = mechanicList;
+    public Transport (String brand, String model, double engineCapacity, ArrayList<Driver> driverList, ArrayList<Mechanic> mechanicList) {
+
+       this.brand = brand;
+       this.model = model;
+       this.engineCapacity = engineCapacity;
+
+       this.driverList = driverList;
+       this.mechanicList = mechanicList;
+
     }
+
 
     public String getBrand() {
         return brand;
@@ -79,6 +84,21 @@ public abstract class Transport implements Competing {
         return lapSpeed;
     }
 
+    public List<Driver> getDriverList() {
+        return driverList;
+    }
+
+    public void setDriverList(ArrayList<Driver> driverList) {
+            this.driverList = driverList;
+    }
+
+    public List<Mechanic> getMechanicList() {
+        return mechanicList;
+    }
+
+    public void setMechanicList(ArrayList<Mechanic> mechanicList) {
+        this.mechanicList = mechanicList;
+    }
 
     public void compliance() {
     }
@@ -102,9 +122,9 @@ public abstract class Transport implements Competing {
         }
     }
 
-    public abstract void performMaintenance(List<Mechanic> mechanicList);
+    public abstract void performMaintenance();
 
-    public abstract void fixTheVehicle (List<Mechanic> mechanicList);
+    public abstract void fixTheVehicle ();
     public abstract void racingTeamInfo (List<Driver> driverList, List<Mechanic> mechanicList);
 
     @Override
