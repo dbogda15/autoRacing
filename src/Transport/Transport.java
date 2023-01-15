@@ -40,7 +40,7 @@ public abstract class Transport implements Competing {
         }
     }
 
-    public Transport (String brand, String model, double engineCapacity, ArrayList<Driver> driverList, ArrayList<Mechanic> mechanicList) {
+    public Transport (String brand, String model, double engineCapacity, List<Driver> driverList, List<Mechanic> mechanicList) {
 
        this.brand = brand;
        this.model = model;
@@ -88,15 +88,16 @@ public abstract class Transport implements Competing {
         return driverList;
     }
 
-    public void setDriverList(ArrayList<Driver> driverList) {
+    public void setDriverList(List<Driver> driverList) {
             this.driverList = driverList;
     }
+
 
     public List<Mechanic> getMechanicList() {
         return mechanicList;
     }
 
-    public void setMechanicList(ArrayList<Mechanic> mechanicList) {
+    public void setMechanicList(List<Mechanic> mechanicList) {
         this.mechanicList = mechanicList;
     }
 
@@ -125,7 +126,7 @@ public abstract class Transport implements Competing {
     public abstract void performMaintenance();
 
     public abstract void fixTheVehicle ();
-    public abstract void racingTeamInfo (List<Driver> driverList, List<Mechanic> mechanicList);
+    public abstract void racingTeamInfo ();
 
     @Override
     public void pitStop() {

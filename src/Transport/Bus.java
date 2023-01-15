@@ -4,7 +4,6 @@ import Driver.CategoryD;
 import Driver.Driver;
 import Mechanic.Mechanic;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ public class Bus<D extends CategoryD> extends Transport {
 
     private D driver;
     private Capacity capacity;
-    private Mechanic <?> mechanic;
+    private Mechanic<?> mechanic;
     public enum Capacity {
         EXTRA_SMALL(0,10),
         SMALL(10, 25),
@@ -41,8 +40,8 @@ public class Bus<D extends CategoryD> extends Transport {
         super(brand, model, 3.0);
     }
 
-    public Bus(String brand, String model, double engineCapacity, Capacity capacity) {
-        super(brand, model, engineCapacity);
+    public Bus(String brand, String model, double engineCapacity, List<Driver> driverList, List<Mechanic> mechanicList,Capacity capacity) {
+        super(brand, model, engineCapacity, driverList, mechanicList);
         this.capacity = capacity;
     }
 
@@ -52,6 +51,14 @@ public class Bus<D extends CategoryD> extends Transport {
 
     public void setDriver(D driver) {
         this.driver = driver;
+    }
+
+    public Mechanic<?> getMechanic() {
+        return mechanic;
+    }
+
+    public void setMechanic(Mechanic<?> mechanic) {
+        this.mechanic = mechanic;
     }
 
     public void compliance(D driver) {
@@ -85,22 +92,12 @@ public class Bus<D extends CategoryD> extends Transport {
         throw new UnsupportedOperationException (getBrand() + " " + getModel() + " can't be diagnosed.");
     }
 
-    public Mechanic getMechanic() {
-        return mechanic;
-    }
-
-    public void setMechanic(Mechanic mechanic) {
-        if (mechanic != null) {
-            this.mechanic = mechanic;
-        }
-    }
-
     @Override
     public void performMaintenance() {
             System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
-            for (Mechanic mechanic : mechanicList) {
+            for (Mechanic<?> mechanic : getMechanicList()) {
                 if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " + getMechanicList());
+                    System.out.println("* " + mechanic.getLastName() + " " + mechanic.getName());
                 }
             }
     }
@@ -108,18 +105,18 @@ public class Bus<D extends CategoryD> extends Transport {
     @Override
     public void fixTheVehicle() {
         System.out.println("\nWho can fix " + getBrand () + " " + getModel ()+ ": ");
-        for (Mechanic mechanic : getMechanicList()) {
+        for (Mechanic<?> mechanic : getMechanicList()) {
             if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
-                System.out.println("* " + getMechanic());
+                System.out.println("* " + mechanic.getLastName() + " " + mechanic.getName());
             }
         }
     }
 
     @Override
-    public void racingTeamInfo(List<Driver> driverList, List<Mechanic> mechanicList) {
+    public void racingTeamInfo() {
         System.out.println("\nRace team of Bus " + getBrand() + " " + getModel() + ": ");
         if (mechanic != null || driver != null) {
-            for (Mechanic mechanic : mechanicList) {
+            for (Mechanic<?> mechanic : getMechanicList()) {
                 if (Objects.equals(mechanic.getName(), getMechanic().getName())) {
                     System.out.println("* Mechanic " + mechanic.getLastName() + " " + mechanic.getName());
                 }

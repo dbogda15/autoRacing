@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Truck<C extends CategoryC> extends Transport {
 
     private C driver;
-    private Mechanic <?> mechanic;
+    private Mechanic<?> mechanic;
     private LoadCapacity loadCapacity;
 
 public enum LoadCapacity {
@@ -39,8 +39,8 @@ public enum LoadCapacity {
         super(brand, model, 15.0);
     }
 
-    public Truck (String brand, String model, double engineCapacity, LoadCapacity loadCapacity) {
-        super(brand, model, engineCapacity);
+    public Truck (String brand, String model, double engineCapacity,List<Driver> driverList, List<Mechanic> mechanicList, LoadCapacity loadCapacity) {
+        super(brand, model, engineCapacity, driverList, mechanicList);
         this.loadCapacity = loadCapacity;
     }
 
@@ -89,22 +89,20 @@ public enum LoadCapacity {
     }
 
 
-    public Mechanic getMechanic() {
+    public Mechanic<?> getMechanic() {
         return mechanic;
     }
 
-    public void setMechanic(Mechanic mechanic) {
-        if (mechanic != null) {
-            this.mechanic = mechanic;
-        }
+    public void setMechanic(Mechanic<?> mechanic) {
+        this.mechanic = mechanic;
     }
 
     @Override
     public void performMaintenance() {
             System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
-            for (Mechanic mechanic : getMechanicList()) {
+            for (Mechanic<?> mechanic : getMechanicList()) {
                 if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " + getMechanicList());
+                    System.out.println("* " +mechanic.getLastName() + " " + mechanic.getName());
                 }
             }
         }
@@ -112,25 +110,25 @@ public enum LoadCapacity {
     @Override
     public void fixTheVehicle() {
         System.out.println("\nWho can fix " + getBrand () + " " + getModel ()+ ": ");
-        for (Mechanic mechanic : getMechanicList()) {
+        for (Mechanic<?> mechanic : getMechanicList()) {
             if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
-                System.out.println("* " + getMechanic());
+                System.out.println("* " + mechanic.getLastName() + " " + mechanic.getName());
             }
         }
     }
 
     @Override
-    public void racingTeamInfo(List<Driver> driverList, List<Mechanic> mechanicList) {
+    public void racingTeamInfo() {
         System.out.println("\nRace team of " + getBrand() + " " + getModel() + ": ");
         if (mechanic != null || driver != null) {
-            for (Mechanic mechanic : mechanicList) {
+            for (Mechanic<?> mechanic : getMechanicList()) {
                 if (Objects.equals(mechanic.getName(), getMechanic().getName())) {
                     System.out.println("* Mechanic " + mechanic.getLastName() + " " + mechanic.getName());
                 }
             }
             for (Driver driver : driverList) {
                 if (Objects.equals(driver.getName(), getDriver().getName())) {
-                    System.out.println("* Driver " + getDriver().getName());
+                    System.out.println("* Driver " + driver.getName());
                 }
             }
         }
