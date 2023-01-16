@@ -115,13 +115,15 @@ public class Bus<D extends CategoryD> extends Transport {
     @Override
     public void racingTeamInfo() {
         System.out.println("\nRace team of Bus " + getBrand() + " " + getModel() + ": ");
-        if (mechanic != null || driver != null) {
+        if (mechanic != null) {
             for (Mechanic<?> mechanic : getMechanicList()) {
                 if (Objects.equals(mechanic.getName(), getMechanic().getName())) {
                     System.out.println("* Mechanic " + mechanic.getLastName() + " " + mechanic.getName());
                 }
             }
-            for (Driver driver : driverList) {
+        }
+        if (driver != null) {
+            for (Driver driver : getDriverList()) {
                 if (Objects.equals(driver.getName(), getDriver().getName())) {
                     System.out.println("* Driver " + getDriver().getName());
                 }

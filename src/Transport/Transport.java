@@ -17,8 +17,8 @@ public abstract class Transport implements Competing {
 
     public double [] lapSpeed;
 
-    public List<Driver> driverList = new ArrayList<>();
-    public List <Mechanic> mechanicList = new ArrayList<>();
+    private List<Driver> driverList = new ArrayList<>();
+    private List <Mechanic> mechanicList = new ArrayList<>();
 
     public Transport (String brand, String model, double engineCapacity) {
         if (Objects.isNull(brand) || brand.isBlank()) {
