@@ -5,6 +5,7 @@ import Driver.Driver;
 import Mechanic.Mechanic;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Bus<D extends CategoryD> extends Transport {
@@ -63,7 +64,7 @@ public class Bus<D extends CategoryD> extends Transport {
 
     public void compliance(D driver) {
         System.out.println("\nThe driver " + driver.getName() + " drives " + getBrand() + " " + getModel()
-                    + " and will participate in the race.");
+                + " and will participate in the race.");
     }
 
     public void startMoving () {
@@ -92,14 +93,18 @@ public class Bus<D extends CategoryD> extends Transport {
         throw new UnsupportedOperationException (getBrand() + " " + getModel() + " can't be diagnosed.");
     }
 
+    public void setMechanicList(List<Mechanic> mechanicList) {
+        this.mechanicList = mechanicList;
+    }
+
     @Override
     public void performMaintenance() {
-            System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
-            for (Mechanic<?> mechanic : getMechanicList()) {
-                if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " + mechanic.getLastName() + " " + mechanic.getName());
-                }
+        System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
+        for (Mechanic<?> mechanic : getMechanicList()) {
+            if (mechanic.getAccess() == Mechanic.Access.BUS || mechanic.getAccess() == Mechanic.Access.ALL) {
+                System.out.println("* " + mechanic.getLastName() + " " + mechanic.getName());
             }
+        }
     }
 
     @Override

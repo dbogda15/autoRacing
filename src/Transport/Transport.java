@@ -2,13 +2,9 @@ package Transport;
 import Driver.Driver;
 import Mechanic.Mechanic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class Transport implements Competing {
-
     public final String brand;
     public final String model;
     public double engineCapacity;
@@ -17,8 +13,8 @@ public abstract class Transport implements Competing {
 
     public double [] lapSpeed;
 
-    private List<Driver> driverList = new ArrayList<>();
-    private List <Mechanic> mechanicList = new ArrayList<>();
+    protected List<Driver> driverList = new ArrayList<>();
+    protected List <Mechanic> mechanicList = new ArrayList<>();
 
     public Transport (String brand, String model, double engineCapacity) {
         if (Objects.isNull(brand) || brand.isBlank()) {
@@ -42,12 +38,12 @@ public abstract class Transport implements Competing {
 
     public Transport (String brand, String model, double engineCapacity, List<Driver> driverList, List<Mechanic> mechanicList) {
 
-       this.brand = brand;
-       this.model = model;
-       this.engineCapacity = engineCapacity;
+        this.brand = brand;
+        this.model = model;
+        this.engineCapacity = engineCapacity;
 
-       this.driverList = driverList;
-       this.mechanicList = mechanicList;
+        this.driverList = driverList;
+        this.mechanicList = mechanicList;
 
     }
 
@@ -89,7 +85,7 @@ public abstract class Transport implements Competing {
     }
 
     public void setDriverList(List<Driver> driverList) {
-            this.driverList = driverList;
+        this.driverList = driverList;
     }
 
 

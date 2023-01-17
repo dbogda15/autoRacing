@@ -5,6 +5,7 @@ import Driver.Driver;
 import Mechanic.Mechanic;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Truck<C extends CategoryC> extends Transport {
@@ -35,11 +36,12 @@ public enum LoadCapacity {
     }
 }
 
-    public Truck (String brand, String model) {
-        super(brand, model, 15.0);
+    public Truck(String brand, String model, double engineCapacity, LoadCapacity loadCapacity) {
+        super(brand, model, engineCapacity);
+        this.loadCapacity = loadCapacity;
     }
 
-    public Truck (String brand, String model, double engineCapacity,List<Driver> driverList, List<Mechanic> mechanicList, LoadCapacity loadCapacity) {
+    public Truck (String brand, String model, double engineCapacity, List<Driver> driverList, List<Mechanic> mechanicList, LoadCapacity loadCapacity) {
         super(brand, model, engineCapacity, driverList, mechanicList);
         this.loadCapacity = loadCapacity;
     }
@@ -97,15 +99,19 @@ public enum LoadCapacity {
         this.mechanic = mechanic;
     }
 
+    public void setMechanicList(List<Mechanic> mechanicList) {
+    this.mechanicList = mechanicList;
+    }
+
     @Override
     public void performMaintenance() {
-            System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
-            for (Mechanic<?> mechanic : getMechanicList()) {
-                if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
-                    System.out.println("* " +mechanic.getLastName() + " " + mechanic.getName());
-                }
+        System.out.println("\nWho can perform maintenance " + getBrand () + " " + getModel () + " : ");
+        for (Mechanic<?> mechanic : getMechanicList()) {
+            if (mechanic.getAccess() == Mechanic.Access.TRUCK || mechanic.getAccess() == Mechanic.Access.ALL) {
+                System.out.println("* " +mechanic.getLastName() + " " + mechanic.getName());
             }
         }
+    }
 
     @Override
     public void fixTheVehicle() {
@@ -133,6 +139,6 @@ public enum LoadCapacity {
                     System.out.println("* Driver " + driver.getName());
                 }
             }
-        }
     }
+}
 
