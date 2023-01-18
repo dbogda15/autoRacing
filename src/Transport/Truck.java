@@ -34,7 +34,7 @@ public enum LoadCapacity {
     public Double getTo() {
         return to;
     }
-}
+    }
 
     public Truck(String brand, String model, double engineCapacity, LoadCapacity loadCapacity) {
         super(brand, model, engineCapacity);
@@ -139,6 +139,20 @@ public enum LoadCapacity {
                     System.out.println("* Driver " + driver.getName());
                 }
             }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Truck<?> truck = (Truck<?>) o;
+        return Objects.equals(driver, truck.driver) && Objects.equals(mechanic, truck.mechanic) && loadCapacity == truck.loadCapacity;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), driver, mechanic, loadCapacity);
     }
 }
 

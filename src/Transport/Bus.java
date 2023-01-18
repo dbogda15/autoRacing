@@ -93,6 +93,13 @@ public class Bus<D extends CategoryD> extends Transport {
         throw new UnsupportedOperationException (getBrand() + " " + getModel() + " can't be diagnosed.");
     }
 
+    public void pitStop() {
+        System.out.println("\nReplace " + getBrand() + " " + getModel() + " tires.");
+        System.out.println("Refuel.");
+        System.out.println("Check the oil level");
+        System.out.println("Check your passengers. You must have 20 of them!");
+    }
+
     public void setMechanicList(List<Mechanic> mechanicList) {
         this.mechanicList = mechanicList;
     }
@@ -136,10 +143,17 @@ public class Bus<D extends CategoryD> extends Transport {
         }
     }
 
-    public void pitStop() {
-        System.out.println("\nReplace " + getBrand() + " " + getModel() + " tires.");
-        System.out.println("Refuel.");
-        System.out.println("Check the oil level");
-        System.out.println("Check your passengers. You must have 20 of them!");
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Bus<?> bus = (Bus<?>) o;
+        return Objects.equals(driver, bus.driver) && capacity == bus.capacity && Objects.equals(mechanic, bus.mechanic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), driver, capacity, mechanic);
     }
 }
