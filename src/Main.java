@@ -5,10 +5,7 @@ import Driver.Driver;
 import Mechanic.Mechanic;
 import Transport.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException, DriversException {
@@ -69,35 +66,28 @@ public class Main {
         transportsList.add(truck3);
         transportsList.add(truck4);
 
-//        car3.setMechanic(andrey);
-//        car3.setDriver(dima);
-//        car3.racingTeamInfo();
 
-        HashMap<Transport, Mechanic<?>> maintenanceMap = new HashMap<>();
-        maintenanceMap.put(car1, andrey);
-        maintenanceMap.put(car2, egor);
-        maintenanceMap.put(car3, andrey);
-        maintenanceMap.put(car4, maxim);
-        maintenanceMap.put(bus1, maxim);
-        maintenanceMap.put(bus2, oleg);
-        maintenanceMap.put(bus3, oleg);
-        maintenanceMap.put(bus4, maxim);
-        maintenanceMap.put(truck1, masha);
-        maintenanceMap.put(truck2, masha);
-        maintenanceMap.put(truck3, maxim);
-        maintenanceMap.put(truck4, maxim);
-        maintenanceMap.put(truck4, maxim); // проверка на дублирование
-        maintenanceMap.put(truck4, maxim);
-        maintenanceMap.put(truck4, maxim);
+        HashSet<Driver> driverHashSet = new HashSet<>(driverList);
+        driverHashSet.add(dasha); //проверка дублей
+        driverHashSet.add(new CategoryB("Olga", "yes", 19));
+        driverHashSet.add(new CategoryB("Olga", "yes", 19));
+        driverHashSet.add(new CategoryD("Anakin"));
+        driverHashSet.add(dasha);
 
+        System.out.println(driverHashSet); // 1ый вариант вывода списка водителей
 
-        printMaintenanceMap(maintenanceMap);
-    }
+        System.out.println("--------------------------------------------");
 
-    public static void printMaintenanceMap (HashMap<Transport, Mechanic<?>> maintenanceMap) {
-        System.out.println("\n List of mechanics and vehicles: ");
-        for (Map.Entry<Transport, Mechanic<?>> value : maintenanceMap.entrySet()) {
-            System.out.println(value.getValue().getName() + " " + value.getValue().getLastName() + " maintains " + value.getKey().getClass().getSimpleName() + " " + value.getKey().getBrand() + " " + value.getKey().getModel());
+        for (Driver driver : driverHashSet) { // 2ой вариант
+            System.out.println(driver);
+        }
+
+        System.out.println("--------------------------------------------");
+
+        Iterator<Driver> driverIterator = driverHashSet.iterator(); // 3ий вариант
+        while (driverIterator.hasNext()) {
+            Driver next = driverIterator.next();
+            System.out.println(next);
         }
     }
 }

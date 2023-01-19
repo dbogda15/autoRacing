@@ -24,6 +24,12 @@ public abstract class Driver {
             this.name = name;
         }
 
+        if (Objects.isNull(driverLicense) || driverLicense.isBlank()) {
+            driverLicense = "yes";
+        } else {
+            this.driverLicense = driverLicense;
+        }
+
         try {
             setDriverLicense(driverLicense);
         } catch (DriversException e) {
