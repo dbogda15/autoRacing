@@ -1,9 +1,10 @@
 package Transport;
+import Driver.Driver;
+import Mechanic.Mechanic;
 
-import java.util.Objects;
+import java.util.*;
 
 public abstract class Transport implements Competing {
-
     public final String brand;
     public final String model;
     public double engineCapacity;
@@ -12,8 +13,10 @@ public abstract class Transport implements Competing {
 
     public double [] lapSpeed;
 
-    public Transport (String brand, String model, double engineCapacity) {
+    protected List<Driver> driverList = new ArrayList<>();
+    protected List <Mechanic> mechanicList = new ArrayList<>();
 
+    public Transport (String brand, String model, double engineCapacity) {
         if (Objects.isNull(brand) || brand.isBlank()) {
             this.brand = "*Undetermined transport*";
         } else {
@@ -32,6 +35,18 @@ public abstract class Transport implements Competing {
             this.engineCapacity = engineCapacity;
         }
     }
+
+    public Transport (String brand, String model, double engineCapacity, List<Driver> driverList, List<Mechanic> mechanicList) {
+
+        this.brand = brand;
+        this.model = model;
+        this.engineCapacity = engineCapacity;
+
+        this.driverList = driverList;
+        this.mechanicList = mechanicList;
+
+    }
+
 
     public String getBrand() {
         return brand;
@@ -65,10 +80,49 @@ public abstract class Transport implements Competing {
         return lapSpeed;
     }
 
+    public List<Driver> getDriverList() {
+        return driverList;
+    }
+
+    public void setDriverList(List<Driver> driverList) {
+        this.driverList = driverList;
+    }
+
+
+    public List<Mechanic> getMechanicList() {
+        return mechanicList;
+    }
+
+    public void setMechanicList(List<Mechanic> mechanicList) {
+        this.mechanicList = mechanicList;
+    }
+
+    public void compliance() {
+    }
 
     public abstract void startMoving ();
 
     public abstract void finishMoving ();
+
+    public abstract void printType();
+
+    public abstract void passDiagnostic ();
+
+    public static void diagnostic (Transport...transports) {
+        for (Transport transport : transports) {
+            try {
+                transport.passDiagnostic();
+            } catch (UnsupportedOperationException e) {
+                System.out.println("\nThere is some problem with " + transport.getBrand() + " " + transport.getModel());
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public abstract void performMaintenance();
+
+    public abstract void fixTheVehicle ();
+    public abstract void racingTeamInfo ();
 
     @Override
     public void pitStop() {
@@ -109,11 +163,14 @@ public abstract class Transport implements Competing {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transport transport = (Transport) o;
-        return Double.compare(transport.engineCapacity, engineCapacity) == 0 && Objects.equals(brand, transport.brand) && Objects.equals(model, transport.model);
+        return Double.compare(transport.engineCapacity, engineCapacity) == 0 && Objects.equals(brand, transport.brand) && Objects.equals(model, transport.model) && Arrays.equals(lapTimes, transport.lapTimes) && Arrays.equals(lapSpeed, transport.lapSpeed) && Objects.equals(driverList, transport.driverList) && Objects.equals(mechanicList, transport.mechanicList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(brand, model, engineCapacity);
+        int result = Objects.hash(brand, model, engineCapacity, driverList, mechanicList);
+        result = 31 * result + Arrays.hashCode(lapTimes);
+        result = 31 * result + Arrays.hashCode(lapSpeed);
+        return result;
     }
 }
